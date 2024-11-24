@@ -22,7 +22,6 @@ export const Day = styled.div<{ $selected?: boolean, $disabled?: boolean }>`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
 
     flex-grow: 0;
     flex-shrink: 0;

@@ -1,21 +1,22 @@
-import { Container, Day } from './styled.ts'
+import dayjs from 'dayjs'
 
 // Hooks
 import useCalendar from 'components/Calendar/hooks/useCalendar'
-import dayjs from 'dayjs'
 
+// Styled
+import { Container, Day } from './styled.ts'
 
 function Calendar() {
-
-  const { days } = useCalendar()
+  const calendar = useCalendar(2024, 11)
 
   return (
     <Container>
-      {days.map(({ date, selected, sameMonth }, index) => (
+      {calendar.map(({ date, selected, sameMonth, oncClick }, index) => (
         <Day
           key={`${index}-day`}
           $selected={selected}
           $disabled={!sameMonth}
+          onClick={oncClick}
         >
           {dayjs(date).format('D')}
         </Day>
