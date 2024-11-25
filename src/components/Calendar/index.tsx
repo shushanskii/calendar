@@ -1,26 +1,45 @@
 import dayjs from 'dayjs'
 
+// Components
+import Selected from 'components/Calendar/Selected'
+
 // Hooks
 import useCalendar from 'components/Calendar/hooks/useCalendar'
 
 // Styled
-import { Container, Day } from './styled.ts'
+import { Wrapper, Day, Container, Reset, Header } from './styled.ts'
 
-function Calendar() {
-  const calendar = useCalendar(2024, 11)
+interface Props {
+  year: number
+  month: number
+  mode: 'single' | 'range'
+}
+
+function Calendar<T>({ year, month, mode }: Props) {
+  const { dates, reset, selected } = useCalendar<T>(year, month, mode)
+
+  const handleClick = () => {
+    reset()
+  }
 
   return (
     <Container>
-      {calendar.map(({ date, selected, sameMonth, oncClick }, index) => (
-        <Day
-          key={`${index}-day`}
-          $selected={selected}
-          $disabled={!sameMonth}
-          onClick={oncClick}
-        >
-          {dayjs(date).format('D')}
-        </Day>
-      ))}
+      <Header>
+        <Reset onClick={handleClick}>reset</Reset>
+        {selected && <Selected<T> selected={selected} />}
+      </Header>
+      <Wrapper>
+        {dates.map(({ date, selected, sameMonth, ...rest }, index) => (
+          <Day
+            key={`${index}-day`}
+            $selected={selected}
+            $disabled={!sameMonth}
+            {...rest}
+          >
+            {dayjs(date).format('D')}
+          </Day>
+        ))}
+      </Wrapper>
     </Container>
   )
 }

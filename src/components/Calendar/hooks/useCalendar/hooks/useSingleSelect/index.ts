@@ -1,32 +1,67 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Utils
 import getDays from 'components/Calendar/hooks/useCalendar/utils/getDays'
 
 // Types
-import { Month } from 'components/Calendar/hooks/useCalendar/types'
+import { CalendarType, Month, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
 
-function useSingleSelect(year: number, month: number) {
-  const [state, setState] = useState<Month>(getDays(year, month))
+function useSingleSelect(year: number, month: number): CalendarType<SingleSelect> {
+  const [dates, setDates] = useState<Month>(getDays(year, month))
+  const [selected, setSelected] = useState<string | undefined>(undefined)
+  const [sealed, setSealed] = useState<boolean>(false)
 
-  const onClick = (_date: string) => () => {
-    setState(prevState => Object
+  useEffect(() => {
+    if (!selected) {
+      setDates(getDays(year, month))
+      setSealed(false)
+    }
+
+    setDates(prevState => Object
       .entries(prevState)
       .reduce<Month>((result, [date, value]) => {
         result[date] = {
           ...value,
-          selected: date === _date,
+          selected: date === selected,
         }
         return result
       }, {}),
     )
+  }, [selected])
+
+
+  const reset = () => {
+    setSelected(undefined)
   }
 
-  return Object.entries(state).map(([date, rest]) => ({
-    date,
-    oncClick: onClick(date),
-    ...rest,
-  }))
+  const onClick = (_date: string) => () => {
+    setSealed(!sealed)
+    setSelected(_date)
+  }
+
+  const onMouseEnter = (_date: string) => () => {
+    if(!sealed) {
+      setSelected(_date)
+    }
+  }
+
+  const onMouseLeave = (_date: string) => () => {
+    if(!sealed) {
+      setSelected(undefined)
+    }
+  }
+
+  return {
+    dates: Object.entries(dates).map(([date, rest]) => ({
+      date,
+      onClick: onClick(date),
+      onMouseEnter: onMouseEnter(date),
+      onMouseLeave: onMouseLeave(date),
+      ...rest,
+    })),
+    selected,
+    reset,
+  }
 
 }
 

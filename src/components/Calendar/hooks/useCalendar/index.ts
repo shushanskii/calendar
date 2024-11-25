@@ -1,8 +1,19 @@
+// Hooks
 import useSingleSelect from 'components/Calendar/hooks/useCalendar/hooks/useSingleSelect'
+import useRangeSelect from 'components/Calendar/hooks/useCalendar/hooks/useRangeSelect'
 
-function useCalendar(year: number, month: number) {
+// Types
+import { CalendarType } from 'components/Calendar/hooks/useCalendar/types'
 
-  return useSingleSelect(year, month)
+function useCalendar<T>(year: number, month: number, mode: 'single' | 'range'): CalendarType<T> {
+
+  const singleSelectUsage = useSingleSelect(year, month)
+
+  const rangeSelectUsage = useRangeSelect(year, month)
+
+  const result = mode === 'single' ? singleSelectUsage : rangeSelectUsage
+
+  return result as CalendarType<T>;
 }
 
 export default useCalendar
