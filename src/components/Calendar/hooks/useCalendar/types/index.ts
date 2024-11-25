@@ -12,7 +12,7 @@ export interface RangeSelect {
   end: string | undefined
 }
 
-interface Date extends Day {
+export interface Date extends Day {
   date: string
   onClick: () => void
   onMouseEnter: () => void

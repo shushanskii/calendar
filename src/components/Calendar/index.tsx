@@ -1,19 +1,21 @@
-import dayjs from 'dayjs'
-
 // Components
 import Selected from 'components/Calendar/Selected'
+import Days from 'components/Calendar/Days'
 
 // Hooks
 import useCalendar from 'components/Calendar/hooks/useCalendar'
 
 // Styled
-import { Wrapper, Day, Container, Reset, Header } from './styled.ts'
+import { Wrapper, Container, Reset, Header } from './styled.ts'
 
 interface Props {
   year: number
   month: number
   mode: 'single' | 'range'
 }
+
+const DATE_WIDTH = 50
+const DATE_HEIGHT = 50
 
 function Calendar<T>({ year, month, mode }: Props) {
   const { dates, reset, selected } = useCalendar<T>(year, month, mode)
@@ -28,17 +30,8 @@ function Calendar<T>({ year, month, mode }: Props) {
         <Reset onClick={handleClick}>reset</Reset>
         {selected && <Selected<T> selected={selected} />}
       </Header>
-      <Wrapper>
-        {dates.map(({ date, selected, sameMonth, ...rest }, index) => (
-          <Day
-            key={`${index}-day`}
-            $selected={selected}
-            $disabled={!sameMonth}
-            {...rest}
-          >
-            {dayjs(date).format('D')}
-          </Day>
-        ))}
+      <Wrapper width={7 * DATE_WIDTH} height={5 * DATE_HEIGHT}>
+        <Days dates={dates} width={DATE_WIDTH} height={DATE_HEIGHT}/>
       </Wrapper>
     </Container>
   )
