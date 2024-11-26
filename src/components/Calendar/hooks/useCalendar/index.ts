@@ -13,7 +13,7 @@ function useCalendar<T>(year: number, month: number, mode: 'single' | 'range'): 
 
   const result = mode === 'single' ? singleSelectUsage : rangeSelectUsage
 
-  return result as CalendarType<T>;
+  return result as CalendarType<T>
 }
 
 export default useCalendar

@@ -10,9 +10,11 @@ interface Props {
   dates: Date[]
   width: number
   height: number
+  start: string | undefined
+  end: string | undefined
 }
 
-function Days({ dates, width, height }: Props) {
+function Days({ dates, width, height, start, end }: Props) {
   return (
     <>
       {dates.map(({ date, selected, sameMonth, ...rest }, index) => (
@@ -20,6 +22,8 @@ function Days({ dates, width, height }: Props) {
           key={`${index}-day`}
           $selected={selected}
           $disabled={!sameMonth}
+          $selectedFirst={start === date}
+          $selectedLast={end === date}
           width={width}
           height={height}
           {...rest}

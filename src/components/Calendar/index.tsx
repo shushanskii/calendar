@@ -7,6 +7,7 @@ import useCalendar from 'components/Calendar/hooks/useCalendar'
 
 // Styled
 import { Wrapper, Container, Reset, Header } from './styled.ts'
+import { RangeSelect, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
 
 interface Props {
   year: number
@@ -31,7 +32,12 @@ function Calendar<T>({ year, month, mode }: Props) {
         {selected && <Selected<T> selected={selected} />}
       </Header>
       <Wrapper width={7 * DATE_WIDTH} height={5 * DATE_HEIGHT}>
-        <Days dates={dates} width={DATE_WIDTH} height={DATE_HEIGHT}/>
+        <Days
+          dates={dates}
+          width={DATE_WIDTH}
+          height={DATE_HEIGHT}
+          start={(selected as RangeSelect)?.start ?? (selected as SingleSelect)}
+          end={(selected as RangeSelect)?.end ?? (selected as SingleSelect)}/>
       </Wrapper>
     </Container>
   )

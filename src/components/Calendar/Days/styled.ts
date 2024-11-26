@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components'
 export const Day = styled.div<{
   $selected?: boolean,
   $disabled?: boolean,
+  $selectedFirst?: boolean
+  $selectedLast?: boolean
   width: number,
   height: number
 }>`
@@ -22,6 +24,16 @@ export const Day = styled.div<{
     &:hover {
         color: red;
     }
+    
+    ${({ $selectedFirst }) => $selectedFirst && css`
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    `}
+
+    ${({ $selectedLast }) => $selectedLast && css`
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    `}
 
     ${({ $selected }) => $selected && css`
         background: green;
