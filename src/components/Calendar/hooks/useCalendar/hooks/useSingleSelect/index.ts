@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import getDays from 'components/Calendar/hooks/useCalendar/utils/getDays'
 
 // Types
-import { CalendarType, Month, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
+import { CalendarResponse, Month, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
 
-function useSingleSelect(year: number, month: number): CalendarType<SingleSelect> {
+function useSingleSelect(year: number, month: number): CalendarResponse<SingleSelect> {
   const [dates, setDates] = useState<Month>(getDays(year, month))
   const [selected, setSelected] = useState<string | undefined>(undefined)
   const [sealed, setSealed] = useState<boolean>(false)

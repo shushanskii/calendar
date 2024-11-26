@@ -19,8 +19,14 @@ export interface Date extends Day {
   onMouseLeave: () => void
 }
 
-export interface CalendarType<T> {
+export interface CalendarProps {
+  year: number
+  month: number
+  mode: 'single' | 'range'
+}
+
+export interface CalendarResponse<T> {
   dates: Date[]
   reset: () => void
-  selected: T extends SingleSelect ? SingleSelect : RangeSelect
+  selected: T extends SingleSelect ? SingleSelect : T extends RangeSelect ? RangeSelect : never
 }

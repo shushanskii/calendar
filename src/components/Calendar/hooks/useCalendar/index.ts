@@ -3,17 +3,16 @@ import useSingleSelect from 'components/Calendar/hooks/useCalendar/hooks/useSing
 import useRangeSelect from 'components/Calendar/hooks/useCalendar/hooks/useRangeSelect'
 
 // Types
-import { CalendarType } from 'components/Calendar/hooks/useCalendar/types'
+import { CalendarProps, CalendarResponse } from 'components/Calendar/hooks/useCalendar/types'
 
-function useCalendar<T>(year: number, month: number, mode: 'single' | 'range'): CalendarType<T> {
+function useCalendar<T>({ year, month, mode }: CalendarProps): CalendarResponse<T> {
 
   const singleSelectUsage = useSingleSelect(year, month)
-
   const rangeSelectUsage = useRangeSelect(year, month)
 
   const result = mode === 'single' ? singleSelectUsage : rangeSelectUsage
 
-  return result as CalendarType<T>
+  return result as CalendarResponse<T>
 }
 
 export default useCalendar
