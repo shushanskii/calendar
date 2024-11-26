@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 // Styled
-import { Day } from 'components/Calendar/Days/styled.ts'
+import { Day } from 'components/Calendar/Layout/Days/styled.ts'
 
 // Types
 import { Date } from 'components/Calendar/hooks/useCalendar/types'

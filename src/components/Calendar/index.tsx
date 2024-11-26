@@ -1,22 +1,24 @@
 // Components
-import Selected from 'components/Calendar/Selected'
-import Days from 'components/Calendar/Days'
+import Selected from 'components/Calendar/layout/Selected'
+import Days from 'components/Calendar/layout/Days'
 
 // Hooks
 import useCalendar from 'components/Calendar/hooks/useCalendar'
 
+// Const
+import { DATE_HEIGHT, DATE_WIDTH } from 'components/Calendar/consts'
+
+// Types
+import { RangeSelect, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
+
 // Styled
 import { Wrapper, Container, Reset, Header } from './styled.ts'
-import { RangeSelect, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
 
 interface Props {
   year: number
   month: number
   mode: 'single' | 'range'
 }
-
-const DATE_WIDTH = 50
-const DATE_HEIGHT = 50
 
 function Calendar<T>({ year, month, mode }: Props) {
   const { dates, reset, selected } = useCalendar<T>({ year, month, mode })

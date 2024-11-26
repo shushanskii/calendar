@@ -19,7 +19,20 @@ export interface Date extends Day {
   onMouseLeave: () => void
 }
 
-export interface CalendarProps {
+
+export interface CalendarSingleSelectProps {
+  year: number
+  month: number
+}
+
+export interface CalendarRangeSelectProps {
+  year: number
+  month: number
+  minRange: number
+  maxRange: number
+}
+
+export interface CalendarProps extends Partial<CalendarRangeSelectProps> {
   year: number
   month: number
   mode: 'single' | 'range'

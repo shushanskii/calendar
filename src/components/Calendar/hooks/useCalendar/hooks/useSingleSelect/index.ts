@@ -4,9 +4,14 @@ import { useEffect, useState } from 'react'
 import getDays from 'components/Calendar/hooks/useCalendar/utils/getDays'
 
 // Types
-import { CalendarResponse, Month, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
+import {
+  CalendarResponse,
+  CalendarSingleSelectProps,
+  Month,
+  SingleSelect,
+} from 'components/Calendar/hooks/useCalendar/types'
 
-function useSingleSelect(year: number, month: number): CalendarResponse<SingleSelect> {
+function useSingleSelect({ year, month }: CalendarSingleSelectProps): CalendarResponse<SingleSelect> {
   const [dates, setDates] = useState<Month>(getDays(year, month))
   const [selected, setSelected] = useState<string | undefined>(undefined)
   const [sealed, setSealed] = useState<boolean>(false)
@@ -40,13 +45,14 @@ function useSingleSelect(year: number, month: number): CalendarResponse<SingleSe
   }
 
   const onMouseEnter = (_date: string) => () => {
-    if(!sealed) {
+    if (!sealed) {
       setSelected(_date)
     }
   }
 
+  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
   const onMouseLeave = (_date: string) => () => {
-    if(!sealed) {
+    if (!sealed) {
       setSelected(undefined)
     }
   }

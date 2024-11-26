@@ -6,11 +6,16 @@ import isBetween from 'dayjs/plugin/isBetween'
 import getDays from 'components/Calendar/hooks/useCalendar/utils/getDays'
 
 // Types
-import { CalendarResponse, Month, RangeSelect } from 'components/Calendar/hooks/useCalendar/types'
+import {
+  CalendarRangeSelectProps,
+  CalendarResponse,
+  Month,
+  RangeSelect,
+} from 'components/Calendar/hooks/useCalendar/types'
 
 dayjs.extend(isBetween)
 
-function useRangeSelect(year: number, month: number): CalendarResponse<RangeSelect> {
+function useRangeSelect({ year, month }: CalendarRangeSelectProps): CalendarResponse<RangeSelect> {
   const [dates, setDates] = useState<Month>(getDays(year, month))
   const [start, setStart] = useState<string | undefined>(undefined)
   const [end, setEnd] = useState<string | undefined>(undefined)
@@ -78,7 +83,7 @@ function useRangeSelect(year: number, month: number): CalendarResponse<RangeSele
       onMouseLeave: onMouseLeave(date),
       ...rest,
     })),
-    selected: dayjs(end).isBefore(start) ? { start: end, end: start } : { start, end } ,
+    selected: dayjs(end).isBefore(start) ? { start: end, end: start } : { start, end },
     reset,
   }
 }
