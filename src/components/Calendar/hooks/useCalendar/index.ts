@@ -6,20 +6,30 @@ import useRangeSelect from 'components/Calendar/hooks/useCalendar/hooks/useRange
 import { DEFAULT_MAX_RANGE, DEFAULT_MIN_RANGE } from 'src/components/Calendar/consts'
 
 // Types
-import { CalendarProps, CalendarResponse } from 'components/Calendar/hooks/useCalendar/types'
+import {
+  CalendarProps,
+  CalendarResponse,
+  CalendarType,
+} from 'components/Calendar/hooks/useCalendar/types'
 
-function useCalendar<T>({ year, month, mode, minRange, maxRange }: CalendarProps): CalendarResponse<T> {
-  const singleSelectUsage = useSingleSelect({ year, month })
+
+export function useCalendar<T>({
+                                 year,
+                                 month,
+                                 minRange,
+                                 maxRange,
+                               }: CalendarProps): CalendarResponse<CalendarType<T>> {
   const rangeSelectUsage = useRangeSelect({
     year,
     month,
     minRange: minRange ?? DEFAULT_MIN_RANGE,
     maxRange: maxRange ?? DEFAULT_MAX_RANGE,
   })
+  const singleSelectUsage = useSingleSelect({ year, month })
 
-  const result = mode === 'single' ? singleSelectUsage : rangeSelectUsage
+  if (minRange && maxRange) {
+    return rangeSelectUsage as CalendarResponse<CalendarType<T>>
+  }
 
-  return result as CalendarResponse<T>
+  return singleSelectUsage as CalendarResponse<CalendarType<T>>
 }
-
-export default useCalendar

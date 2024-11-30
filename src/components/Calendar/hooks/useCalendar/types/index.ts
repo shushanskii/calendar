@@ -20,27 +20,17 @@ export interface Date extends Day {
   onMouseLeave: () => void
 }
 
-
-export interface CalendarSingleSelectProps {
+export interface CalendarProps {
   year: number
   month: number
+  minRange?: number
+  maxRange?: number
 }
 
-export interface CalendarRangeSelectProps {
-  year: number
-  month: number
-  minRange: number
-  maxRange: number
-}
-
-export interface CalendarProps extends Partial<CalendarRangeSelectProps> {
-  year: number
-  month: number
-  mode: 'single' | 'range'
-}
+export type CalendarType<T> = T extends SingleSelect ? SingleSelect : T extends RangeSelect ? RangeSelect : never
 
 export interface CalendarResponse<T> {
   dates: Date[]
   reset: () => void
-  selected: T extends SingleSelect ? SingleSelect : T extends RangeSelect ? RangeSelect : never
+  selected: CalendarType<T>
 }

@@ -1,4 +1,4 @@
-import Calendar from 'components/Calendar'
+import { CalendarRangeSelect, CalendarSingleSelect } from 'components/Calendar'
 import GlobalStyle from 'styles/GlobalStyle.ts'
 import styled from 'styled-components'
 
@@ -7,8 +7,8 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      <Calendar year={2024} month={11} mode={'single'} />
-      <Calendar year={2024} month={11} mode={'range'} />
+      <CalendarSingleSelect year={2024} month={11} />
+      <CalendarRangeSelect year={2024} month={11} minRange={5} maxRange={10} />
     </Container>
   )
 }
