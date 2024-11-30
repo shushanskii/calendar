@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 
 // Styled
-import { Day } from 'components/Calendar/Layout/Days/styled.ts'
+import { Day } from 'components/Calendar/layout/Days/styled'
 
 // Types
 import { Date } from 'components/Calendar/hooks/useCalendar/types'
@@ -17,13 +17,14 @@ interface Props {
 function Days({ dates, width, height, start, end }: Props) {
   return (
     <>
-      {dates.map(({ date, selected, sameMonth, ...rest }, index) => (
+      {dates.map(({ date, selected, highlighted, sameMonth, ...rest }, index) => (
         <Day
           key={`${index}-day`}
           $selected={selected}
           $disabled={!sameMonth}
           $selectedFirst={start === date}
           $selectedLast={end === date}
+          $highlighted={highlighted}
           width={width}
           height={height}
           {...rest}

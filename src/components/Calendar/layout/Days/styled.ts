@@ -5,6 +5,7 @@ export const Day = styled.div<{
   $disabled?: boolean,
   $selectedFirst?: boolean
   $selectedLast?: boolean
+  $highlighted?: boolean
   width: number,
   height: number
 }>`
@@ -35,6 +36,10 @@ export const Day = styled.div<{
         border-bottom-right-radius: 5px;
     `}
 
+    ${({ $highlighted}) => $highlighted && css`
+        background: rgba(0,255,0, 0.5);
+    `}
+    
     ${({ $selected }) => $selected && css`
         background: green;
     `}

@@ -39,7 +39,7 @@ function Calendar<T>({ year, month, mode }: Props) {
           width={DATE_WIDTH}
           height={DATE_HEIGHT}
           start={(selected as RangeSelect)?.start ?? (selected as SingleSelect)}
-          end={(selected as RangeSelect)?.end ?? (selected as SingleSelect)} />
+          end={(selected as RangeSelect)?.end ?? (selected as RangeSelect)?.start ?? (selected as SingleSelect)} />
       </Wrapper>
     </Container>
   )

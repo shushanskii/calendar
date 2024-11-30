@@ -1,5 +1,6 @@
 export interface Day {
   selected: boolean
+  highlighted: boolean
   sameMonth: boolean
 }
 

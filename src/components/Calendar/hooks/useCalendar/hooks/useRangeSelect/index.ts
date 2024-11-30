@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import isBetween from 'dayjs/plugin/isBetween'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 
 // Utils
 import getDays from 'components/Calendar/hooks/useCalendar/utils/getDays'
@@ -14,8 +16,10 @@ import {
 } from 'components/Calendar/hooks/useCalendar/types'
 
 dayjs.extend(isBetween)
+dayjs.extend(isSameOrBefore)
+dayjs.extend(isSameOrAfter)
 
-function useRangeSelect({ year, month }: CalendarRangeSelectProps): CalendarResponse<RangeSelect> {
+function useRangeSelect({ year, month, minRange, maxRange }: CalendarRangeSelectProps): CalendarResponse<RangeSelect> {
   const [dates, setDates] = useState<Month>(getDays(year, month))
   const [start, setStart] = useState<string | undefined>(undefined)
   const [end, setEnd] = useState<string | undefined>(undefined)
@@ -38,6 +42,10 @@ function useRangeSelect({ year, month }: CalendarRangeSelectProps): CalendarResp
           selected: !!(start && end && dayjs(date).isBetween(start, end))
             || !!(start && dayjs(date).isSame(start))
             || !!(end && dayjs(date).isSame(end)),
+          highlighted: start && value.sameMonth
+            ? dayjs(date).isSameOrAfter(dayjs(start).add(minRange - 1, 'day')) && dayjs(date).isSameOrBefore(dayjs(start).add(maxRange - 1, 'day'))
+            || dayjs(date).isSameOrBefore(dayjs(start).subtract(minRange - 1, 'day')) && dayjs(date).isSameOrAfter(dayjs(start).subtract(maxRange - 1, 'day'))
+            : false,
         }
         return result
       }, {}),
@@ -56,7 +64,7 @@ function useRangeSelect({ year, month }: CalendarRangeSelectProps): CalendarResp
       setSealedStart(true)
     }
 
-    if (sealedStart && !sealedEnd) {
+    if (sealedStart && !sealedEnd && dates[_date].highlighted) {
       setEnd(_date)
       setSealedEnd(true)
     }
@@ -67,7 +75,7 @@ function useRangeSelect({ year, month }: CalendarRangeSelectProps): CalendarResp
       setStart(_date)
     }
 
-    if (sealedStart && !sealedEnd) {
+    if (sealedStart && !sealedEnd && dates[_date].highlighted) {
       setEnd(_date)
     }
   }
