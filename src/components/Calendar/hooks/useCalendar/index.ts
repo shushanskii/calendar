@@ -25,7 +25,7 @@ export function useCalendar<T>({
     minRange: minRange ?? DEFAULT_MIN_RANGE,
     maxRange: maxRange ?? DEFAULT_MAX_RANGE,
   })
-  const singleSelectUsage = useSingleSelect({ year, month })
+  const singleSelectUsage = useSingleSelect({ months: [[2024, 11], [2024, 12]] })
 
   if (minRange && maxRange) {
     return rangeSelectUsage as CalendarResponse<CalendarType<T>>

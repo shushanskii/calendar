@@ -11,7 +11,7 @@ import getDays from 'components/Calendar/hooks/useCalendar/utils/getDays'
 import {
   CalendarRangeSelectProps,
   CalendarResponse,
-  Month,
+  Years,
   RangeSelect,
 } from 'components/Calendar/hooks/useCalendar/types'
 
@@ -20,7 +20,7 @@ dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 
 function useRangeSelect({ year, month, minRange, maxRange }: CalendarRangeSelectProps): CalendarResponse<RangeSelect> {
-  const [dates, setDates] = useState<Month>(getDays(year, month))
+  const [dates, setDates] = useState<Years>(getDays(year, month))
   const [start, setStart] = useState<string | undefined>(undefined)
   const [end, setEnd] = useState<string | undefined>(undefined)
   const [sealedStart, setSealedStart] = useState<boolean>(false)
@@ -36,7 +36,7 @@ function useRangeSelect({ year, month, minRange, maxRange }: CalendarRangeSelect
 
     setDates(prevState => Object
       .entries(prevState)
-      .reduce<Month>((result, [date, value]) => {
+      .reduce<Years>((result, [date, value]) => {
         result[date] = {
           ...value,
           selected: !!(start && end && dayjs(date).isBetween(start, end))

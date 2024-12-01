@@ -5,6 +5,8 @@ export interface Day {
 }
 
 export type Month = Record<string, Day>
+export type Year = Record<string, Month>
+export type Years = Record<string, Year>
 
 export type SingleSelect = string | undefined
 
@@ -27,10 +29,16 @@ export interface CalendarProps {
   maxRange?: number
 }
 
+export interface CalendarSingleSelectProps {
+  months: [number, number][]
+}
+
+export type CalendarRangeSelectProps = Required<CalendarProps>
+
 export type CalendarType<T> = T extends SingleSelect ? SingleSelect : T extends RangeSelect ? RangeSelect : never
 
 export interface CalendarResponse<T> {
-  dates: Date[]
+  dates: Date[][][]
   reset: () => void
   selected: CalendarType<T>
 }

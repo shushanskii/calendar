@@ -21,6 +21,7 @@ function getDays(year: number, month: number): Month {
   while (day.isSameOrBefore(endOfMonth) || day.isoWeekday() !== 1) {
 
     result[day.format('YYYY-MM-DD')] = {
+      highlighted: false,
       selected: false,
       sameMonth: +day.format('M') === month,
     }

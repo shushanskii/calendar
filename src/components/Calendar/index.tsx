@@ -9,10 +9,10 @@ import { useCalendar } from 'components/Calendar/hooks/useCalendar'
 import { DATE_HEIGHT, DATE_WIDTH } from 'components/Calendar/consts'
 
 // Types
-import { RangeSelect, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
+import { SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
 
 // Styled
-import { Wrapper, Container, Reset, Header } from './styled.ts'
+import { Month, Container, Reset, Header, Wrapper } from './styled.ts'
 
 interface SingleSelectProps {
   year: number
@@ -32,48 +32,56 @@ export function CalendarSingleSelect({ year, month }: SingleSelectProps) {
         <Reset onClick={handleClick}>reset</Reset>
         {selected && <Selected<SingleSelect> selected={selected} />}
       </Header>
-      <Wrapper width={7 * DATE_WIDTH} height={5 * DATE_HEIGHT}>
-        <Days
-          dates={dates}
-          width={DATE_WIDTH}
-          height={DATE_HEIGHT}
-          start={selected}
-          end={selected}
-        />
+      <Wrapper>
+        {dates.map(_dates => _dates.map((__dates, index) => (
+          <Month
+            width={7 * DATE_WIDTH}
+            height={5 * DATE_HEIGHT}
+            key={`${index}-calendar`}
+          >
+            <Days
+              dates={__dates}
+              width={DATE_WIDTH}
+              height={DATE_HEIGHT}
+              start={selected}
+              end={selected}
+            />
+          </Month>
+        )))}
       </Wrapper>
     </Container>
   )
 }
 
-interface RangeSelectProps {
-  year: number
-  month: number
-  minRange: number
-  maxRange: number
-}
-
-export function CalendarRangeSelect({ year, month, minRange, maxRange }: RangeSelectProps) {
-  const { dates, reset, selected } = useCalendar<RangeSelect>({ year, month, minRange, maxRange })
-
-  const handleClick = () => {
-    reset()
-  }
-
-  return (
-    <Container>
-      <Header>
-        <Reset onClick={handleClick}>reset</Reset>
-        {selected && <Selected<RangeSelect> selected={selected} />}
-      </Header>
-      <Wrapper width={7 * DATE_WIDTH} height={5 * DATE_HEIGHT}>
-        <Days
-          dates={dates}
-          width={DATE_WIDTH}
-          height={DATE_HEIGHT}
-          start={selected?.start}
-          end={selected?.end ?? selected?.start}
-        />
-      </Wrapper>
-    </Container>
-  )
-}
+// interface RangeSelectProps {
+//   year: number
+//   month: number
+//   minRange: number
+//   maxRange: number
+// }
+//
+// export function CalendarRangeSelect({ year, month, minRange, maxRange }: RangeSelectProps) {
+//   const { dates, reset, selected } = useCalendar<RangeSelect>({ year, month, minRange, maxRange })
+//
+//   const handleClick = () => {
+//     reset()
+//   }
+//
+//   return (
+//     <Container>
+//       <Header>
+//         <Reset onClick={handleClick}>reset</Reset>
+//         {selected && <Selected<RangeSelect> selected={selected} />}
+//       </Header>
+//       <Wrapper width={7 * DATE_WIDTH} height={5 * DATE_HEIGHT}>
+//         <Days
+//           dates={dates}
+//           width={DATE_WIDTH}
+//           height={DATE_HEIGHT}
+//           start={selected?.start}
+//           end={selected?.end ?? selected?.start}
+//         />
+//       </Wrapper>
+//     </Container>
+//   )
+// }

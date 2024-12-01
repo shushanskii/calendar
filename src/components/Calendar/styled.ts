@@ -15,7 +15,15 @@ export const Header = styled.div`
     align-items: center;
 `
 
-export const Wrapper = styled.div<{
+export const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+`
+
+export const Month = styled.div<{
   width: number,
   height: number
 }>`
