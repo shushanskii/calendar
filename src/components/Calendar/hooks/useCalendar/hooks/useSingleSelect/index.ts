@@ -7,8 +7,9 @@ import getYear from 'components/Calendar/hooks/useCalendar/utils/getYear'
 // Types
 import {
   CalendarResponse, CalendarSingleSelectProps,
-  SingleSelect, Years, Date,
+  SingleSelect, Years,
 } from 'components/Calendar/hooks/useCalendar/types'
+import yearsMapper from 'components/Calendar/hooks/useCalendar/utils/yearsMapper'
 
 function useSingleSelect({ months }: CalendarSingleSelectProps): CalendarResponse<SingleSelect> {
   const [years, setYears] = useState<Years>(getYear(months))
@@ -47,28 +48,7 @@ function useSingleSelect({ months }: CalendarSingleSelectProps): CalendarRespons
     }
   }
 
-  const dates = Object.entries(years)
-    .reduce<Date[][][]>((result, [, year]) => {
-      result.push(
-        Object.entries(year)
-          .reduce<Date[][]>((result, [, month]) => {
-            result.push(Object.entries(month)
-              .reduce<Date[]>((result, [date, day]) => {
-                result.push({
-                  ...day,
-                  date,
-                  onClick: onClick(date),
-                  onMouseEnter: onMouseEnter(date),
-                  onMouseLeave: onMouseLeave(date),
-                  selected: dayjs(date).isSame(selected),
-                })
-                return result
-              }, []))
-            return result
-          }, []),
-      )
-      return result
-    }, [])
+  const dates = yearsMapper(years, onClick, onMouseEnter, onMouseLeave, (date) => dayjs(date).isSame(selected))
 
   return {
     dates,
