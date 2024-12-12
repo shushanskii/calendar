@@ -1,6 +1,9 @@
 export interface Day {
+  date: string;
+  start: boolean | undefined;
+  end: boolean | undefined;
   selected: boolean
-  highlighted: boolean
+  highlighted?: boolean
   sameMonth: boolean
 }
 
@@ -22,23 +25,17 @@ export interface Date extends Day {
   onMouseLeave: () => void
 }
 
-export interface CalendarProps {
-  year: number
-  month: number
-  minRange?: number
-  maxRange?: number
-}
-
 export interface CalendarSingleSelectProps {
   months: [number, number][]
 }
 
-export type CalendarRangeSelectProps = Required<CalendarProps>
+export interface CalendarRangeSelectProps {
+  months: [number, number][]
+  rangeLimits?: [number, number]
+}
 
-export type CalendarType<T> = T extends SingleSelect ? SingleSelect : T extends RangeSelect ? RangeSelect : never
-
-export interface CalendarResponse<T> {
+export interface CalendarResponse {
   dates: Date[][][]
   reset: () => void
-  selected: CalendarType<T>
+  selected: string[]
 }

@@ -6,7 +6,7 @@ dayjs.extend(isoWeek)
 dayjs.extend(isSameOrBefore)
 
 // Types
-import { Month } from 'components/Calendar/hooks/useCalendar/types'
+import { Month } from 'components/Calendar/hooks/types'
 
 function getDays(year: number, month: number): Month {
   const result: Month = {}
@@ -19,8 +19,10 @@ function getDays(year: number, month: number): Month {
     : startOfMonth.startOf('week').add(1, 'day')
 
   while (day.isSameOrBefore(endOfMonth) || day.isoWeekday() !== 1) {
-
     result[day.format('YYYY-MM-DD')] = {
+      date: day.format('YYYY-MM-DD'),
+      start: false,
+      end: false,
       highlighted: false,
       selected: false,
       sameMonth: +day.format('M') === month,

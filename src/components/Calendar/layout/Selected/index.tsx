@@ -1,34 +1,10 @@
-// Types
-import { RangeSelect, SingleSelect } from 'components/Calendar/hooks/useCalendar/types'
-
-interface Props<T> {
-  selected: NonNullable<T extends SingleSelect ? SingleSelect : RangeSelect>
+interface Props {
+  selected: string[]
 }
 
-function Selected<T>({ selected }: Props<T>) {
+function Selected({ selected }: Props) {
 
-  if ((selected as RangeSelect).start && (selected as RangeSelect).end) {
-    return (
-      <div>
-        <span>{(selected as RangeSelect).start}</span>
-        &nbsp;-&nbsp;
-        <span>{(selected as RangeSelect).end}</span>
-      </div>
-    )
-  }
-
-  if ((selected as RangeSelect).start) {
-    return <div>{(selected as RangeSelect).start}</div>
-  }
-
-
-  if (typeof selected !== 'object') {
-    return (
-      <div>{(selected as SingleSelect)}</div>
-    )
-  }
-
-  return <div>selected</div>
+  return <div>{selected[0]} - {selected[selected.length - 1]}</div>
 }
 
 export default Selected

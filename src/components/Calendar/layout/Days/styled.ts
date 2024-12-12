@@ -46,6 +46,5 @@ export const Day = styled.div<{
 
     ${({ $disabled }) => $disabled && css`
         color: grey;
-        pointer-events: none;
     `}
 `

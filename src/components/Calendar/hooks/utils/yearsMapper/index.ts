@@ -1,6 +1,6 @@
-import { Date, Years } from 'components/Calendar/hooks/useCalendar/types'
+import { Date, Years } from 'components/Calendar/hooks/types'
 
-function yearsMapper(
+function mapper(
   years: Years,
   // eslint-disable-next-line no-unused-vars
   onClick: (date: string) => () => void,
@@ -8,8 +8,6 @@ function yearsMapper(
   onMouseEnter: (date: string) => () => void,
   // eslint-disable-next-line no-unused-vars
   onMouseLeave: (date: string) => () => void,
-  // eslint-disable-next-line no-unused-vars
-  checkSelected: (date: string) => boolean,
 ): Date[][][] {
   return Object.entries(years)
     .reduce<Date[][][]>((result, [, year]) => {
@@ -24,7 +22,6 @@ function yearsMapper(
                   onClick: onClick(date),
                   onMouseEnter: onMouseEnter(date),
                   onMouseLeave: onMouseLeave(date),
-                  selected: checkSelected(date),
                 })
                 return result
               }, []))
@@ -35,4 +32,4 @@ function yearsMapper(
     }, [])
 }
 
-export default yearsMapper
+export default mapper
