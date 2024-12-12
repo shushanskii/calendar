@@ -7,7 +7,7 @@ import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { Day, Month, Year, Years } from 'components/Calendar/hooks/types'
 
 // Components
-import getYear from 'components/Calendar/hooks/utils/getYear'
+import getYear from 'src/components/Calendar/hooks/useRangeSelect/reducer/getYear'
 
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)

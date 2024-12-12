@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import { Years } from 'components/Calendar/hooks/types'
 
-import getDays from 'components/Calendar/hooks/utils/getDays'
+import getDays from 'components/Calendar/hooks/useRangeSelect/reducer/getDays'
 
 function getYear(months: [number, number][]): Years {
   return months

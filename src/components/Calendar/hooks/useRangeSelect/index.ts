@@ -1,4 +1,5 @@
 import { useReducer } from 'react'
+import dayjs from 'dayjs'
 
 // Reducer
 import {
@@ -9,19 +10,17 @@ import {
 } from 'components/Calendar/hooks/useRangeSelect/reducer'
 
 // Utils
-import mapper from 'components/Calendar/hooks/utils/yearsMapper'
+import mapper from 'components/Calendar/hooks/useRangeSelect/reducer/mapper'
 
 // Types
 import {
-  CalendarRangeSelectProps,
+  CalendarProps,
   CalendarResponse,
 } from 'components/Calendar/hooks/types'
-import dayjs from 'dayjs'
 
-
-function useRangeSelect({ months, rangeLimits }: CalendarRangeSelectProps): CalendarResponse {
+function useRangeSelect({ months, rangeLimits, singleSelect }: CalendarProps): CalendarResponse {
   const [state, dispatch] = useReducer(
-    getReducer(months, rangeLimits),
+    getReducer(months, singleSelect ? undefined : rangeLimits),
     months,
     getInitialState,
   )
@@ -36,6 +35,12 @@ function useRangeSelect({ months, rangeLimits }: CalendarRangeSelectProps): Cale
   }
 
   const onClick = (date: string) => () => {
+    if (singleSelect && !start && !end) {
+      dispatch({ type: Actions.SET_SEALED_START, payload: date })
+      dispatch({ type: Actions.SET_SEALED_END, payload: date })
+      return void 0
+    }
+
     if (!start) {
       dispatch({ type: Actions.SET_SEALED_START, payload: date })
     }
@@ -50,6 +55,12 @@ function useRangeSelect({ months, rangeLimits }: CalendarRangeSelectProps): Cale
     const month = dayjs(date).format('MM')
 
     if(!dates?.[year]?.[month]?.[date].sameMonth) {
+      return void 0
+    }
+
+    if (singleSelect && !start && !end) {
+      dispatch({ type: Actions.SET_START, payload: date })
+      dispatch({ type: Actions.SET_END, payload: date })
       return void 0
     }
 

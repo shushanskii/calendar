@@ -15,10 +15,11 @@ import { Container, Reset, Header, Month, Wrapper } from '../styled.ts'
 interface Props {
   months: [number, number][]
   rangeLimits?: [number, number]
+  singleSelect?: boolean
 }
 
-function CalendarRangeSelect({ months, rangeLimits }: Props) {
-  const { dates, reset, selected } = useRangeSelect({ months, rangeLimits })
+function CalendarRangeSelect({ months, rangeLimits, singleSelect = true }: Props) {
+  const { dates, reset, selected } = useRangeSelect({ months, rangeLimits, singleSelect })
 
   const handleClick = () => {
     reset()

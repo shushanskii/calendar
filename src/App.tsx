@@ -11,7 +11,7 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      <CalendarRangeSelect months={[[2024, 12], [2025, 1]]} rangeLimits={[5, 10]}/>
+      <CalendarRangeSelect months={[[2024, 12], [2025, 1]]} rangeLimits={[5, 10]} singleSelect={false}/>
       <CalendarRangeSelect months={[[2024, 12], [2025, 1]]} rangeLimits={[1, 11]}/>
       <CalendarRangeSelect months={[[2024, 12], [2025, 1]]}/>
     </Container>
