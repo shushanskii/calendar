@@ -4,7 +4,7 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 
 // Types
-import { Day, Month, Year, Years } from 'components/Calendar/hooks/types'
+import { Day, Month, Year, Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
 
 // Components
 import getYear from 'src/components/Calendar/hooks/useRangeSelect/reducer/getYear'

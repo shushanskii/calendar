@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { Day } from 'components/Calendar/layout/Days/styled'
 
 // Types
-import { Date } from 'src/components/Calendar/hooks/types'
+import { Date } from 'components/Calendar/hooks/useRangeSelect/types'
 
 interface Props {
   dates: Date[]

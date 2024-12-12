@@ -6,7 +6,7 @@ dayjs.extend(isoWeek)
 dayjs.extend(isSameOrBefore)
 
 // Types
-import { Month } from 'components/Calendar/hooks/types'
+import { Month } from 'src/components/Calendar/hooks/useRangeSelect/types'
 
 function getDays(year: number, month: number): Month {
   const result: Month = {}

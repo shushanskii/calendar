@@ -22,6 +22,9 @@ export interface CalendarProps {
   months: [number, number][]
   rangeLimits?: [number, number]
   singleSelect?: boolean
+  // eslint-disable-next-line no-unused-vars
+  onComplete?: (range: [string, string]) => void
+  onReset?: () => void
 }
 
 export interface CalendarResponse {

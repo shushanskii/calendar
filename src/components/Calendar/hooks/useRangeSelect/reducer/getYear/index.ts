@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { Years } from 'components/Calendar/hooks/types'
+import { Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
 
 import getDays from 'components/Calendar/hooks/useRangeSelect/reducer/getDays'
 

@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import dayjs from 'dayjs'
 
 // Reducer
@@ -16,9 +16,9 @@ import mapper from 'components/Calendar/hooks/useRangeSelect/reducer/mapper'
 import {
   CalendarProps,
   CalendarResponse,
-} from 'components/Calendar/hooks/types'
+} from 'components/Calendar/hooks/useRangeSelect/types'
 
-function useRangeSelect({ months, rangeLimits, singleSelect }: CalendarProps): CalendarResponse {
+function useRangeSelect({ months, rangeLimits, singleSelect, onComplete, onReset }: CalendarProps): CalendarResponse {
   const [state, dispatch] = useReducer(
     getReducer(months, singleSelect ? undefined : rangeLimits),
     months,
@@ -26,12 +26,21 @@ function useRangeSelect({ months, rangeLimits, singleSelect }: CalendarProps): C
   )
 
   const { dates } = state
-
   const selected = getSelectedDates(dates)
   const [start, end] = getSelectedRange(dates)
 
+  useEffect(() => {
+    if (start?.date && end?.date && onComplete) {
+      onComplete([start.date, end.date])
+    }
+  }, [start?.date, end?.date])
+
   const reset = () => {
     dispatch({ type: Actions.RESET })
+
+    if (onReset) {
+      onReset()
+    }
   }
 
   const onClick = (date: string) => () => {
@@ -54,7 +63,7 @@ function useRangeSelect({ months, rangeLimits, singleSelect }: CalendarProps): C
     const year = dayjs(date).format('YYYY')
     const month = dayjs(date).format('MM')
 
-    if(!dates?.[year]?.[month]?.[date].sameMonth) {
+    if (!dates?.[year]?.[month]?.[date].sameMonth) {
       return void 0
     }
 
@@ -75,7 +84,7 @@ function useRangeSelect({ months, rangeLimits, singleSelect }: CalendarProps): C
 
   // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
   const onMouseLeave = (_date: string) => () => {
-    if(!start && !end) {
+    if (!start && !end) {
       dispatch({ type: Actions.RESET })
     }
   }

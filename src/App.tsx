@@ -1,19 +1,23 @@
 import styled from 'styled-components'
 
 // Components
-import CalendarRangeSelect from 'components/Calendar/RangeSelect'
+import Calendar from 'components/Calendar'
 
 // Styled
 import GlobalStyle from 'styles/GlobalStyle.ts'
 
 function App() {
 
+  const handleComplete = (range: [string, string]) => console.log('range', range)
+
+  const handleReset = () => console.log('reset')
+
   return (
     <Container>
       <GlobalStyle />
-      <CalendarRangeSelect months={[[2024, 12], [2025, 1]]} rangeLimits={[5, 10]} singleSelect={false}/>
-      <CalendarRangeSelect months={[[2024, 12], [2025, 1]]} rangeLimits={[1, 11]}/>
-      <CalendarRangeSelect months={[[2024, 12], [2025, 1]]}/>
+      <Calendar months={[[2024, 12], [2025, 1]]} rangeLimits={[5, 10]} onComplete={handleComplete} singleSelect={false} onReset={handleReset}/>
+      <Calendar months={[[2024, 12], [2025, 1]]} rangeLimits={[1, 11]} onComplete={handleComplete} singleSelect={false} onReset={handleReset} />
+      <Calendar months={[[2024, 12]]} onComplete={handleComplete} onReset={handleReset}/>
     </Container>
   )
 }

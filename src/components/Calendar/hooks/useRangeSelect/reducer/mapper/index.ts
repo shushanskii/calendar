@@ -1,4 +1,4 @@
-import { Date, Years } from 'components/Calendar/hooks/types'
+import { Date, Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
 
 function mapper(
   years: Years,

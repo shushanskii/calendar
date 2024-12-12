@@ -5,21 +5,23 @@ import Days from 'components/Calendar/layout/Days'
 // Hooks
 import useRangeSelect from 'components/Calendar/hooks/useRangeSelect'
 
-// Const
-import { DATE_HEIGHT, DATE_WIDTH } from 'components/Calendar/consts'
+// Types
+import { CalendarProps } from 'components/Calendar/hooks/useRangeSelect/types'
 
 // Styled
-import { Container, Reset, Header, Month, Wrapper } from '../styled.ts'
+import { Container, Reset, Header, Month, Wrapper } from './styled.ts'
 
+export const DATE_WIDTH = 50
+export const DATE_HEIGHT = 50
 
-interface Props {
-  months: [number, number][]
-  rangeLimits?: [number, number]
-  singleSelect?: boolean
-}
-
-function CalendarRangeSelect({ months, rangeLimits, singleSelect = true }: Props) {
-  const { dates, reset, selected } = useRangeSelect({ months, rangeLimits, singleSelect })
+function Calendar({ months, rangeLimits, onComplete, onReset, singleSelect }: CalendarProps) {
+  const { dates, reset, selected } = useRangeSelect({
+    months,
+    rangeLimits,
+    singleSelect,
+    onReset,
+    onComplete,
+  })
 
   const handleClick = () => {
     reset()
@@ -52,4 +54,4 @@ function CalendarRangeSelect({ months, rangeLimits, singleSelect = true }: Props
   )
 }
 
-export default CalendarRangeSelect
+export default Calendar
