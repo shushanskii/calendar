@@ -20,7 +20,7 @@ import {
   CalendarResponse,
 } from 'components/Calendar/hooks/useCalendar/types'
 
-function useRangeSelect({ months, rangeLimits, singleSelect, onComplete, onReset }: CalendarProps): CalendarResponse {
+function useCalendar({ months, rangeLimits, singleSelect, onComplete, onReset }: CalendarProps): CalendarResponse {
   const [state, dispatch] = useImmerReducer(
     getReducer(months, singleSelect ? undefined : rangeLimits),
     getInitialState(months),
@@ -97,4 +97,4 @@ function useRangeSelect({ months, rangeLimits, singleSelect, onComplete, onReset
   }
 }
 
-export default useRangeSelect
+export default useCalendar

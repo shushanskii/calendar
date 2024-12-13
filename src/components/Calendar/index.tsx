@@ -3,7 +3,7 @@ import Selected from 'components/Calendar/layout/Selected'
 import Days from 'components/Calendar/layout/Days'
 
 // Hooks
-import useRangeSelect from 'components/Calendar/hooks/useCalendar'
+import useCalendar from 'components/Calendar/hooks/useCalendar'
 
 // Types
 import { CalendarProps } from 'components/Calendar/hooks/useCalendar/types'
@@ -15,7 +15,7 @@ export const DATE_WIDTH = 50
 export const DATE_HEIGHT = 50
 
 function Calendar({ months, rangeLimits, onComplete, onReset, singleSelect }: CalendarProps) {
-  const { dates, reset, selected } = useRangeSelect({
+  const { dates, reset, selected } = useCalendar({
     months,
     rangeLimits,
     singleSelect,
