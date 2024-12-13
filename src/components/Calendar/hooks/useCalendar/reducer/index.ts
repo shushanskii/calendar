@@ -1,7 +1,4 @@
 import dayjs from 'dayjs'
-import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 
 // Types
 import { Day, Years } from 'components/Calendar/hooks/useCalendar/types'
@@ -10,9 +7,7 @@ import getYear from 'components/Calendar/hooks/useCalendar/reducer/getYear'
 import yearLoop from 'components/Calendar/hooks/useCalendar/reducer/yearLoop'
 import highlighted from 'components/Calendar/hooks/useCalendar/reducer/highlighted'
 
-dayjs.extend(isBetween)
-dayjs.extend(isSameOrBefore)
-dayjs.extend(isSameOrAfter)
+import './dayjs-setup.ts'
 
 interface State {
   dates: Years

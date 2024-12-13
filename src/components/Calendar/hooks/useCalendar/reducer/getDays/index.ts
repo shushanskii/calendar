@@ -1,9 +1,4 @@
 import dayjs from 'dayjs'
-import isoWeek from 'dayjs/plugin/isoWeek'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
-
-dayjs.extend(isoWeek)
-dayjs.extend(isSameOrBefore)
 
 // Types
 import { Month } from 'components/Calendar/hooks/useCalendar/types'
