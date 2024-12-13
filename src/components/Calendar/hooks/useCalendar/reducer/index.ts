@@ -1,9 +1,10 @@
 import dayjs from 'dayjs'
 
 // Types
-import { Day, Years } from 'components/Calendar/hooks/useCalendar/types'
+import { Years } from 'components/Calendar/hooks/useCalendar/types'
 
 import getYear from 'components/Calendar/hooks/useCalendar/reducer/getYear'
+import getSelectedRange from 'components/Calendar/hooks/useCalendar/reducer/getSelectedRange'
 import yearLoop from 'components/Calendar/hooks/useCalendar/reducer/yearLoop'
 import highlighted from 'components/Calendar/hooks/useCalendar/reducer/highlighted'
 
@@ -38,56 +39,22 @@ export const getInitialState = (months: [number, number][]): State => ({
   dates: getYear(months),
 })
 
-export const getSelectedDates = (years: Years) => {
-  const selected: string[] = []
-
-  Object.entries(years).forEach(
-    ([, year]) => Object.entries(year).forEach(
-      ([, month]) => Object.entries(month).forEach(([date, day]) => {
-        if (day.selected) {
-          selected.push(date)
-        }
-      }),
-    ),
-  )
-
-  return selected
-}
-
-export const getSelectedRange = (years: Years): [Day | undefined, Day | undefined] => {
-  let start: Day | undefined = undefined
-  let end: Day | undefined = undefined
-
-  Object.entries(years).forEach(
-    ([, year]) => Object.entries(year).forEach(
-      ([, month]) => Object.entries(month).forEach(([, day]) => {
-        if (day.start) {
-          start = day
-        }
-        if (day.end) {
-          end = day
-        }
-      }),
-    ),
-  )
-
-  return [start, end]
-}
-
-
 const selected = (start: string, end: string, date: string) => dayjs(date).isBetween(start, end, 'days', '[]')
 
-export const getReducer = (months: [number, number][], rangeLimits: [number, number] | undefined) => (state: State, {
-  type,
-  // @ts-expect-error: 'probably undefined'
-  payload,
-}: Action): State => {
-  switch (type) {
-    case Actions.SET_START: {
-      const start = payload
-      return {
-        ...state,
-        dates: yearLoop(
+export const getReducer = (
+  months: [number, number][],
+  rangeLimits: [number, number] | undefined,
+) =>
+  (state: State, {
+    type,
+    // @ts-expect-error: 'probably undefined'
+    payload,
+  }: Action) => {
+    switch (type) {
+      case Actions.SET_START: {
+        const start = payload
+
+        state.dates = yearLoop(
           state.dates,
           (date, day) => {
             return {
@@ -96,21 +63,19 @@ export const getReducer = (months: [number, number][], rangeLimits: [number, num
               highlighted: rangeLimits ? highlighted(start, rangeLimits, date) && day.sameMonth: false,
             }
           },
-        ),
+        )
+
+        break
       }
-    }
+      case Actions.SET_END: {
+        const end = payload
+        const [start] = getSelectedRange(state.dates)
 
-    case Actions.SET_END: {
-      const end = payload
-      const [start] = getSelectedRange(state.dates)
+        if (!start?.date) {
+          break
+        }
 
-      if (!start?.date) {
-        return { ...state }
-      }
-
-      return {
-        ...state,
-        dates: yearLoop(
+        state.dates = yearLoop(
           state.dates,
           (date, day) => {
             return {
@@ -127,31 +92,20 @@ export const getReducer = (months: [number, number][], rangeLimits: [number, num
               highlighted: rangeLimits ? highlighted(start?.date, rangeLimits, date) && day.sameMonth : false,
             }
           },
-        ),
+        )
+        break
       }
-    }
 
-    case Actions.SET_SEALED_START: {
-      const start = payload
-
-      return {
-        ...state,
-        dates: yearLoop(
-          state.dates,
-          (date, day) => {
-            return {
-              ...day,
-              start: date === start && day.sameMonth,
-            }
-          },
-        ),
+      case Actions.SET_SEALED_START: {
+        const start = payload
+        const year = dayjs(start).format('YYYY')
+        const month = dayjs(start).format('MM')
+        state.dates[year][month][start].start = true
+        break
       }
-    }
-    case Actions.SET_SEALED_END: {
-      const end = payload
-      return {
-        ...state,
-        dates: yearLoop(
+      case Actions.SET_SEALED_END: {
+        const end = payload
+        state.dates = yearLoop(
           state.dates,
           (date, day) => {
             return {
@@ -160,12 +114,13 @@ export const getReducer = (months: [number, number][], rangeLimits: [number, num
               highlighted: false,
             }
           },
-        ),
+        )
+        break
       }
+      case Actions.RESET:
+        return getInitialState(months)
+      default:
+        throw new Error(`Unhandled action type: ${type}`)
     }
-    case Actions.RESET:
-      return getInitialState(months)
-    default:
-      throw new Error(`Unhandled action type: ${type}`)
   }
-}
+

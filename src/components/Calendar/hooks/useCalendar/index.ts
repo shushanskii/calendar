@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect } from 'react'
+import { useImmerReducer } from 'use-immer'
 import dayjs from 'dayjs'
 
 // Reducer
@@ -6,8 +7,9 @@ import {
   Actions,
   getInitialState,
   getReducer,
-  getSelectedDates, getSelectedRange,
 } from 'components/Calendar/hooks/useCalendar/reducer'
+import getSelectedRange from 'components/Calendar/hooks/useCalendar/reducer/getSelectedRange'
+import getSelectedDates from 'components/Calendar/hooks/useCalendar/reducer/getSelectedDates'
 
 // Utils
 import mapper from 'components/Calendar/hooks/useCalendar/reducer/mapper'
@@ -19,10 +21,9 @@ import {
 } from 'components/Calendar/hooks/useCalendar/types'
 
 function useRangeSelect({ months, rangeLimits, singleSelect, onComplete, onReset }: CalendarProps): CalendarResponse {
-  const [state, dispatch] = useReducer(
+  const [state, dispatch] = useImmerReducer(
     getReducer(months, singleSelect ? undefined : rangeLimits),
-    months,
-    getInitialState,
+    getInitialState(months),
   )
 
   const { dates } = state
