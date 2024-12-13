@@ -4,10 +4,11 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 
 // Types
-import { Day, Month, Year, Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
+import { Day, Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
 
-// Components
-import getYear from 'src/components/Calendar/hooks/useRangeSelect/reducer/getYear'
+import getYear from 'components/Calendar/hooks/useRangeSelect/reducer/getYear'
+import yearLoop from 'components/Calendar/hooks/useRangeSelect/reducer/yearLoop'
+import highlighted from 'components/Calendar/hooks/useRangeSelect/reducer/highlighted'
 
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)
@@ -36,20 +37,6 @@ type Action =
   | { type: Actions.SET_END, payload: string }
   | { type: Actions.SET_SEALED_END, payload: string }
   | { type: Actions.RESET };
-
-// eslint-disable-next-line no-unused-vars
-const yearLoop = (years: Years, dayCallbackFn: (date: string, day: Day) => Day) => {
-  return Object.entries(years).reduce<Years>((result, [yearNum, year]) => {
-    result[yearNum] = Object.entries(year).reduce<Year>((result, [monthNum, month]) => {
-      result[monthNum] = Object.entries(month).reduce<Month>((result, [date, day]) => {
-        result[date] = dayCallbackFn(date, day)
-        return result
-      }, {})
-      return result
-    }, {})
-    return result
-  }, {})
-}
 
 
 export const getInitialState = (months: [number, number][]): State => ({
@@ -94,17 +81,6 @@ export const getSelectedRange = (years: Years): [Day | undefined, Day | undefine
 
 
 const selected = (start: string, end: string, date: string) => dayjs(date).isBetween(start, end, 'days', '[]')
-
-
-const highlighted = (start: string | undefined, rangeLimits: [number, number], date: string) => {
-  const rangePastStart = dayjs(start).subtract(rangeLimits[0] - 1, 'day')
-  const rangePastEnd = dayjs(start).subtract(rangeLimits[1] - 1, 'day')
-
-  const rangeFutureStart = dayjs(start).add(rangeLimits[0] - 1, 'day')
-  const rangeFutureEnd = dayjs(start).add(rangeLimits[1] - 1, 'day')
-
-  return dayjs(date).isBetween(rangePastStart, rangePastEnd, 'days', '[]') || dayjs(date).isBetween(rangeFutureStart, rangeFutureEnd, 'days', '[]')
-}
 
 export const getReducer = (months: [number, number][], rangeLimits: [number, number] | undefined) => (state: State, {
   type,
