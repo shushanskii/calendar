@@ -4,11 +4,11 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 
 // Types
-import { Day, Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
+import { Day, Years } from 'components/Calendar/hooks/useCalendar/types'
 
-import getYear from 'components/Calendar/hooks/useRangeSelect/reducer/getYear'
-import yearLoop from 'components/Calendar/hooks/useRangeSelect/reducer/yearLoop'
-import highlighted from 'components/Calendar/hooks/useRangeSelect/reducer/highlighted'
+import getYear from 'components/Calendar/hooks/useCalendar/reducer/getYear'
+import yearLoop from 'components/Calendar/hooks/useCalendar/reducer/yearLoop'
+import highlighted from 'components/Calendar/hooks/useCalendar/reducer/highlighted'
 
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)

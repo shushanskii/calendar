@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 
-import { Years } from 'src/components/Calendar/hooks/useRangeSelect/types'
+import { Years } from 'components/Calendar/hooks/useCalendar/types'
 
-import getDays from 'components/Calendar/hooks/useRangeSelect/reducer/getDays'
+import getDays from 'components/Calendar/hooks/useCalendar/reducer/getDays'
 
 function getYear(months: [number, number][]): Years {
   return months

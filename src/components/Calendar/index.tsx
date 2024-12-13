@@ -3,10 +3,10 @@ import Selected from 'components/Calendar/layout/Selected'
 import Days from 'components/Calendar/layout/Days'
 
 // Hooks
-import useRangeSelect from 'components/Calendar/hooks/useRangeSelect'
+import useRangeSelect from 'components/Calendar/hooks/useCalendar'
 
 // Types
-import { CalendarProps } from 'components/Calendar/hooks/useRangeSelect/types'
+import { CalendarProps } from 'components/Calendar/hooks/useCalendar/types'
 
 // Styled
 import { Container, Reset, Header, Month, Wrapper } from './styled.ts'

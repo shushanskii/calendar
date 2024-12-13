@@ -1,4 +1,4 @@
-import { Day, Month, Year, Years } from 'components/Calendar/hooks/useRangeSelect/types'
+import { Day, Month, Year, Years } from 'components/Calendar/hooks/useCalendar/types'
 
 // eslint-disable-next-line no-unused-vars
 const yearLoop = (years: Years, dayCallbackFn: (date: string, day: Day) => Day) => {

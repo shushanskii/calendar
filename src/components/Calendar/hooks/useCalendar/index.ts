@@ -7,16 +7,16 @@ import {
   getInitialState,
   getReducer,
   getSelectedDates, getSelectedRange,
-} from 'components/Calendar/hooks/useRangeSelect/reducer'
+} from 'components/Calendar/hooks/useCalendar/reducer'
 
 // Utils
-import mapper from 'components/Calendar/hooks/useRangeSelect/reducer/mapper'
+import mapper from 'components/Calendar/hooks/useCalendar/reducer/mapper'
 
 // Types
 import {
   CalendarProps,
   CalendarResponse,
-} from 'components/Calendar/hooks/useRangeSelect/types'
+} from 'components/Calendar/hooks/useCalendar/types'
 
 function useRangeSelect({ months, rangeLimits, singleSelect, onComplete, onReset }: CalendarProps): CalendarResponse {
   const [state, dispatch] = useReducer(
