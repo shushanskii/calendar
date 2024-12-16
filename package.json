@@ -11,11 +11,16 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-spring/three": "^9.7.5",
+    "@react-three/drei": "^9.120.4",
+    "@react-three/fiber": "^8.17.10",
+    "@types/three": "^0.170.0",
     "dayjs": "^1.11.13",
     "immer": "^10.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "styled-components": "^6.1.13",
+    "three": "^0.171.0",
     "use-immer": "^0.11.0"
   },
   "devDependencies": {

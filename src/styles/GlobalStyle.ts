@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         font-family: Arial, Helvetica, sans-serif;
     }
-    
+
     html, body, #root {
         width: 100%;
         height: 100%;
